@@ -1,0 +1,22 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
+st.title("💖 हिना - मेरी पर्सनल एआई पार्टनर")
+st.image("https://i.postimg.cc/VL2VnpBZ/0QSSg-Vv-ZTX-c-N3Ez-Z2iegw.webp", width=300)
+
+components.html("""
+    <video id="webcam" width="100%" height="200px" autoplay playsinline style="border-radius: 15px;"></video>
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+            document.getElementById('webcam').srcObject = stream;
+        });
+    </script>
+""", height=250)
+
+command = st.text_input("हिना से बात करें:")
+if command:
+    if "whatsapp" in command.lower():
+        st.write("✨ **हिना:** ठीक है अर्जुन, व्हाट्सएप खोल रही हूँ...")
+        components.html("<script>window.location.href='whatsapp://';</script>", height=0)
+    else:
+        st.write(f"✨ **हिना:** आपने कहा: '{command}'। मैं आपकी बात समझ रही हूँ।")
