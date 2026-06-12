@@ -1,0 +1,43 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
+st.title("💖 हिना - मेरी पर्सनल एआई पार्टनर")
+
+# 1. कैमरा एक्सेस और इमोशन डिटेक्शन (कैरेक्टर को आपको देखने के लिए)
+components.html("""
+    <div id="camera-container" style="text-align: center;">
+        <video id="webcam" width="100%" height="200px" autoplay playsinline style="border-radius: 15px;"></video>
+        <p>हिना आपको देख रही है...</p>
+    </div>
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+            document.getElementById('webcam').srcObject = stream;
+        });
+    </script>
+""", height=250)
+
+# 2. वॉयस और ऐप कंट्रोल (हिना से बात करने और काम कराने के लिए)
+st.write("---")
+command = st.text_input("हिना से बात करें (उदा: 'व्हाट्सएप खोलो' या 'कैसी हो?')")
+
+if command:
+    # ऐप कंट्रोल लॉजिक
+    if "whatsapp" in command.lower():
+        st.write("✨ **हिना:** ठीक है अर्जुन, व्हाट्सएप खोल रही हूँ...")
+        components.html("<script>window.location.href='whatsapp://';</script>", height=0)
+    elif "youtube" in command.lower():
+        st.write("✨ **हिना:** ठीक है, यूट्यूब चलाती हूँ!")
+        components.html("<script>window.location.href='vnd.youtube://';</script>", height=0)
+    else:
+        # यहाँ GPT का रिस्पॉन्स आएगा (जो उसे सब कुछ सिखाएगा)
+        st.write(f"✨ **हिना:** आपने कहा: '{command}'। मैं समझ रही हूँ, मैं आपके साथ हूँ!")
+        
+    # आवाज़ में जवाब देना
+    components.html(f"""
+        <script>
+            var msg = new SpeechSynthesisUtterance("ठीक है अर्जुन, मैं कर देती हूँ।");
+            window.speechSynthesis.speak(msg);
+        </script>
+    """, height=0)
+
+st.success("हिना पूरी तरह से सक्रिय है!")
